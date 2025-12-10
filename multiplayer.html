@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplayer Minesweeper</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(168, 85, 247, 0.8);
+            }
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        @keyframes winner-celebration {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1) rotate(5deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .animate-pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .animate-shake {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        .animate-winner {
+            animation: winner-celebration 0.6s ease-in-out 3;
+        }
+
+        .cell {
+            width: 32px;
+            height: 32px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.2s ease;
+            user-select: none;
+            font-size: 14px;
+        }
+
+        .cell:hover:not(.revealed):not(.flagged) {
+            background: linear-gradient(135deg, #f3e7ff 0%, #e9d5ff 100%);
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+
+        .cell.revealed {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-color: #d1d5db;
+        }
+
+        .cell.flagged {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+
+        .cell.mine {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        }
+
+        .player-area {
+            transition: all 0.3s ease;
+        }
+
+        .player-area.active {
+            border: 3px solid #a855f7;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+        }
+
+        .player-area.winner {
+            border: 3px solid #10b981;
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.7);
+        }
+
+        .player-area.loser {
+            opacity: 0.7;
+        }
+
+        @media (max-width: 1024px) {
+            .cell {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                    <img src="logo.png" alt="Minesweeper Logo" class="w-10 h-10 object-contain">
+                    <span
+                        class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        Minesweeper Multiplayer
+                    </span>
+                </a>
+                <a href="index.html"
+                    class="text-gray-700 hover:text-purple-600 transition-colors duration-300 font-medium">
+                    ← Späť na Domov
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Game Container -->
+    <div class="pt-20 pb-8 px-4">
+        <div class="max-w-[1800px] mx-auto">
+
+            <!-- Game Header -->
+            <div class="text-center mb-6 animate-fade-in">
+                <h1
+                    class="text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent">
+                    Multiplayer Súboj
+                </h1>
+                <p class="text-gray-600 text-lg">Kto bude rýchlejší?</p>
+            </div>
+
+            <!-- Difficulty Selection -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-4 shadow-xl mb-4 animate-fade-in">
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="startGame('easy')"
+                        class="difficulty-btn bg-gradient-to-r from-green-500 to-teal-500 text-white px-6 py-2 rounded-xl font-bold shadow-lg hover:shadow-green-500/50 transform hover:scale-105 transition-all duration-300">
+                        Začiatočník (8x8)
+                    </button>
+                    <button onclick="startGame('medium')"
+                        class="difficulty-btn bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-2 rounded-xl font-bold shadow-lg hover:shadow-blue-500/50 transform hover:scale-105 transition-all duration-300">
+                        Pokročilý (10x10)
+                    </button>
+                    <button onclick="startGame('hard')"
+                        class="difficulty-btn bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-2 rounded-xl font-bold shadow-lg hover:shadow-red-500/50 transform hover:scale-105 transition-all duration-300">
+                        Expert (12x12)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Winner Announcement -->
+            <div id="winnerAnnouncement"
+                class="hidden bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 rounded-3xl p-6 shadow-2xl mb-4 animate-fade-in text-center">
+                <div class="text-white">
+                    <h2 class="text-4xl font-bold mb-2">🏆 <span id="winnerName"></span> VYHRAL! 🏆</h2>
+                    <p class="text-2xl mb-2">Čas: <span id="winnerTime"></span> sekúnd</p>
+                    <p class="text-xl opacity-90">Ťahy: <span id="winnerMoves"></span></p>
+                </div>
+            </div>
+
+            <!-- Split Screen Game Boards -->
+            <div class="grid lg:grid-cols-2 gap-4">
+
+                <!-- Player 1 Area -->
+                <div id="player1Area" class="player-area bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-xl">
+                    <!-- Player 1 Header -->
+                    <div class="text-center mb-4">
+                        <h2
+                            class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-3">
+                            🎮 Hráč 1
+                        </h2>
+
+                        <!-- Player 1 Stats -->
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl p-2 text-white">
+                                <div class="text-xl font-bold" id="p1MineCount">10</div>
+                                <div class="text-xs text-purple-100">Míny</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl p-2 text-white">
+                                <div class="text-xl font-bold" id="p1Timer">0</div>
+                                <div class="text-xs text-blue-100">Čas</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-green-500 to-teal-500 rounded-xl p-2 text-white">
+                                <div class="text-xl font-bold" id="p1Moves">0</div>
+                                <div class="text-xs text-green-100">Ťahy</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player 1 Board -->
+                    <div class="flex justify-center mb-4">
+                        <div id="p1GameBoard" class="inline-block"></div>
+                    </div>
+
+                    <div id="p1Message" class="text-center text-lg font-bold hidden"></div>
+                </div>
+
+                <!-- Player 2 Area -->
+                <div id="player2Area" class="player-area bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-xl">
+                    <!-- Player 2 Header -->
+                    <div class="text-center mb-4">
+                        <h2
+                            class="text-2xl font-bold bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent mb-3">
+                            🎮 Hráč 2
+                        </h2>
+
+                        <!-- Player 2 Stats -->
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl p-2 text-white">
+                                <div class="text-xl font-bold" id="p2MineCount">10</div>
+                                <div class="text-xs text-purple-100">Míny</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl p-2 text-white">
+                                <div class="text-xl font-bold" id="p2Timer">0</div>
+                                <div class="text-xs text-blue-100">Čas</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-green-500 to-teal-500 rounded-xl p-2 text-white">
+                                <div class="text-xl font-bold" id="p2Moves">0</div>
+                                <div class="text-xs text-green-100">Ťahy</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Player 2 Board -->
+                    <div class="flex justify-center mb-4">
+                        <div id="p2GameBoard" class="inline-block"></div>
+                    </div>
+
+                    <div id="p2Message" class="text-center text-lg font-bold hidden"></div>
+                </div>
+
+            </div>
+
+            <!-- Control Buttons -->
+            <div class="flex justify-center gap-4 mt-6 animate-fade-in">
+                <button onclick="resetGame()"
+                    class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300">
+                    🔄 Nová Hra
+                </button>
+                <a href="game.html">
+                    <button
+                        class="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:shadow-gray-500/50 transform hover:scale-105 transition-all duration-300">
+                        👤 Singleplayer
+                    </button>
+                </a>
+            </div>
+
+            <!-- Instructions -->
+            <div class="bg-white/70 backdrop-blur-sm rounded-3xl p-6 shadow-xl mt-6 animate-fade-in">
+                <h3 class="text-2xl font-bold mb-4 text-gray-800 text-center">Ako Hrať Multiplayer</h3>
+                <div class="grid md:grid-cols-2 gap-4 text-gray-700">
+                    <div class="flex items-start space-x-3">
+                        <span class="text-2xl">🎯</span>
+                        <div>
+                            <strong>Cieľ:</strong> Buď prvý, kto odhalí všetky bezpečné políčka!
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <span class="text-2xl">🖱️</span>
+                        <div>
+                            <strong>Ovládanie:</strong> Ľavé tlačidlo = odhal, pravé = vlajka
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <span class="text-2xl">⚡</span>
+                        <div>
+                            <strong>Stratégia:</strong> Rychlosť + presnosť = výhra
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <span class="text-2xl">💥</span>
+                        <div>
+                            <strong>Pozor:</strong> Ak trafíš mínu, automaticky prehrávaš!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Game state for both players
+        const players = {
+            p1: {
+                board: [],
+                revealed: [],
+                flagged: [],
+                gameOver: false,
+                gameStarted: false,
+                timer: 0,
+                timerInterval: null,
+                moves: 0,
+                firstClick: true,
+                won: false
+            },
+            p2: {
+                board: [],
+                revealed: [],
+                flagged: [],
+                gameOver: false,
+                gameStarted: false,
+                timer: 0,
+                timerInterval: null,
+                moves: 0,
+                firstClick: true,
+                won: false
+            }
+        };
+
+        let rows = 8;
+        let cols = 8;
+        let mineCount = 10;
+        let gameFinished = false;
+
+        const difficulties = {
+            easy: { rows: 8, cols: 8, mines: 10 },
+            medium: { rows: 10, cols: 10, mines: 20 },
+            hard: { rows: 12, cols: 12, mines: 30 }
+        };
+
+        function startGame(difficulty) {
+            const config = difficulties[difficulty];
+            rows = config.rows;
+            cols = config.cols;
+            mineCount = config.mines;
+            resetGame();
+        }
+
+        function initPlayer(playerId) {
+            const player = players[playerId];
+            player.board = Array(rows).fill(null).map(() => Array(cols).fill(0));
+            player.revealed = Array(rows).fill(null).map(() => Array(cols).fill(false));
+            player.flagged = Array(rows).fill(null).map(() => Array(cols).fill(false));
+            player.gameOver = false;
+            player.gameStarted = false;
+            player.firstClick = true;
+            player.moves = 0;
+            player.timer = 0;
+            player.won = false;
+
+            if (player.timerInterval) {
+                clearInterval(player.timerInterval);
+                player.timerInterval = null;
+            }
+
+            updateStats(playerId);
+            document.getElementById(`${playerId}Message`).classList.add('hidden');
+        }
+
+        function placeMines(playerId, excludeRow, excludeCol) {
+            const player = players[playerId];
+            let minesPlaced = 0;
+
+            while (minesPlaced < mineCount) {
+                const row = Math.floor(Math.random() * rows);
+                const col = Math.floor(Math.random() * cols);
+
+                const isFirstClick = Math.abs(row - excludeRow) <= 1 && Math.abs(col - excludeCol) <= 1;
+
+                if (player.board[row][col] !== -1 && !isFirstClick) {
+                    player.board[row][col] = -1;
+                    minesPlaced++;
+
+                    for (let i = -1; i <= 1; i++) {
+                        for (let j = -1; j <= 1; j++) {
+                            const newRow = row + i;
+                            const newCol = col + j;
+                            if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && player.board[newRow][newCol] !== -1) {
+                                player.board[newRow][newCol]++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function createBoard(playerId) {
+            const gameBoard = document.getElementById(`${playerId}GameBoard`);
+            gameBoard.innerHTML = '';
+            gameBoard.style.display = 'grid';
+            gameBoard.style.gridTemplateColumns = `repeat(${cols}, 32px)`;
+            gameBoard.style.gap = '2px';
+            gameBoard.style.justifyContent = 'center';
+
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell bg-gradient-to-br from-purple-200 to-pink-200 rounded-lg flex items-center justify-center font-bold';
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    cell.dataset.player = playerId;
+
+                    cell.addEventListener('click', () => handleCellClick(playerId, i, j));
+                    cell.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        handleRightClick(playerId, i, j);
+                    });
+
+                    gameBoard.appendChild(cell);
+                }
+            }
+        }
+
+        function handleCellClick(playerId, row, col) {
+            if (gameFinished) return;
+
+            const player = players[playerId];
+            if (player.gameOver || player.revealed[row][col] || player.flagged[row][col]) return;
+
+            if (player.firstClick) {
+                placeMines(playerId, row, col);
+                player.firstClick = false;
+                startTimer(playerId);
+            }
+
+            player.moves++;
+            updateStats(playerId);
+
+            if (player.board[row][col] === -1) {
+                revealMines(playerId);
+                endGame(playerId, false);
+
+                // Other player wins automatically
+                const otherPlayer = playerId === 'p1' ? 'p2' : 'p1';
+                if (!players[otherPlayer].gameOver) {
+                    endGame(otherPlayer, true);
+                }
+                return;
+            }
+
+            revealCell(playerId, row, col);
+            checkWin(playerId);
+        }
+
+        function handleRightClick(playerId, row, col) {
+            if (gameFinished) return;
+
+            const player = players[playerId];
+            if (player.gameOver || player.revealed[row][col]) return;
+
+            player.flagged[row][col] = !player.flagged[row][col];
+            updateCell(playerId, row, col);
+            updateStats(playerId);
+        }
+
+        function revealCell(playerId, row, col) {
+            const player = players[playerId];
+
+            if (row < 0 || row >= rows || col < 0 || col >= cols || player.revealed[row][col] || player.flagged[row][col]) {
+                return;
+            }
+
+            player.revealed[row][col] = true;
+            updateCell(playerId, row, col);
+
+            if (player.board[row][col] === 0) {
+                for (let i = -1; i <= 1; i++) {
+                    for (let j = -1; j <= 1; j++) {
+                        revealCell(playerId, row + i, col + j);
+                    }
+                }
+            }
+        }
+
+        function updateCell(playerId, row, col) {
+            const player = players[playerId];
+            const cell = document.querySelector(`[data-player="${playerId}"][data-row="${row}"][data-col="${col}"]`);
+
+            if (player.revealed[row][col]) {
+                cell.classList.add('revealed');
+                cell.classList.remove('flagged');
+
+                if (player.board[row][col] === -1) {
+                    cell.classList.add('mine');
+                    cell.innerHTML = '💣';
+                } else if (player.board[row][col] > 0) {
+                    cell.textContent = player.board[row][col];
+                    const colors = ['', '#3b82f6', '#10b981', '#ef4444', '#8b5cf6', '#f59e0b', '#ec4899', '#6366f1', '#14b8a6'];
+                    cell.style.color = colors[player.board[row][col]];
+                }
+            } else if (player.flagged[row][col]) {
+                cell.classList.add('flagged');
+                cell.innerHTML = '🚩';
+            } else {
+                cell.classList.remove('flagged');
+                cell.innerHTML = '';
+            }
+        }
+
+        function revealMines(playerId) {
+            const player = players[playerId];
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    if (player.board[i][j] === -1) {
+                        player.revealed[i][j] = true;
+                        updateCell(playerId, i, j);
+                    }
+                }
+            }
+        }
+
+        function checkWin(playerId) {
+            const player = players[playerId];
+            let revealedCount = 0;
+
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    if (player.revealed[i][j] && player.board[i][j] !== -1) {
+                        revealedCount++;
+                    }
+                }
+            }
+
+            if (revealedCount === rows * cols - mineCount) {
+                endGame(playerId, true);
+
+                // Other player loses automatically
+                const otherPlayer = playerId === 'p1' ? 'p2' : 'p1';
+                if (!players[otherPlayer].gameOver) {
+                    endGame(otherPlayer, false);
+                }
+            }
+        }
+
+        function endGame(playerId, won) {
+            const player = players[playerId];
+            player.gameOver = true;
+            player.won = won;
+
+            if (player.timerInterval) {
+                clearInterval(player.timerInterval);
+            }
+
+            const message = document.getElementById(`${playerId}Message`);
+            const playerArea = document.getElementById(`${playerId}Area`);
+            message.classList.remove('hidden');
+
+            if (won) {
+                message.innerHTML = '🎉 Vyhral si! 🎉';
+                message.className = 'text-center mt-4 text-xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent';
+                playerArea.classList.add('winner', 'animate-winner');
+
+                if (!gameFinished) {
+                    gameFinished = true;
+                    showWinnerAnnouncement(playerId);
+                }
+            } else {
+                message.innerHTML = '💥 Prehral si! 💥';
+                message.className = 'text-center mt-4 text-xl font-bold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent animate-shake';
+                playerArea.classList.add('loser');
+            }
+        }
+
+        function showWinnerAnnouncement(playerId) {
+            const player = players[playerId];
+            const announcement = document.getElementById('winnerAnnouncement');
+            const playerNumber = playerId === 'p1' ? '1' : '2';
+
+            document.getElementById('winnerName').textContent = `Hráč ${playerNumber}`;
+            document.getElementById('winnerTime').textContent = player.timer;
+            document.getElementById('winnerMoves').textContent = player.moves;
+
+            announcement.classList.remove('hidden');
+            announcement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function startTimer(playerId) {
+            const player = players[playerId];
+            player.timerInterval = setInterval(() => {
+                player.timer++;
+                document.getElementById(`${playerId}Timer`).textContent = player.timer;
+            }, 1000);
+        }
+
+        function updateStats(playerId) {
+            const player = players[playerId];
+            const flagCount = player.flagged.flat().filter(f => f).length;
+            document.getElementById(`${playerId}MineCount`).textContent = mineCount - flagCount;
+            document.getElementById(`${playerId}Moves`).textContent = player.moves;
+        }
+
+        function resetGame() {
+            gameFinished = false;
+
+            // Reset both players
+            initPlayer('p1');
+            initPlayer('p2');
+
+            // Create boards
+            createBoard('p1');
+            createBoard('p2');
+
+            // Reset UI
+            document.getElementById('winnerAnnouncement').classList.add('hidden');
+            document.getElementById('player1Area').classList.remove('winner', 'loser', 'animate-winner');
+            document.getElementById('player2Area').classList.remove('winner', 'loser', 'animate-winner');
+        }
+
+        // Initialize game on load
+        window.addEventListener('load', () => {
+            resetGame();
+        });
+    </script>
+
+</body>
+
+</html>

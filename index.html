@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="sk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,98 +9,118 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
         }
-        
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         @keyframes pulse-slow {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
         }
-        
+
         .animate-float {
             animation: float 3s ease-in-out infinite;
         }
-        
+
         .animate-fade-in-up {
             animation: fadeInUp 0.8s ease-out forwards;
         }
-        
+
         .animate-pulse-slow {
             animation: pulse-slow 2s ease-in-out infinite;
         }
-        
+
         .delay-100 {
             animation-delay: 0.1s;
         }
-        
+
         .delay-200 {
             animation-delay: 0.2s;
         }
-        
+
         .delay-300 {
             animation-delay: 0.3s;
         }
-        
+
         .delay-400 {
             animation-delay: 0.4s;
         }
-        
+
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        
+
         .gradient-card {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
-        
+
         .gradient-feature {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         }
-        
+
         .gradient-stats {
             background: linear-gradient(135deg, #90dc96 0%, #38f9d7 100%);
         }
-        
+
         .gradient-cta {
             background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
         }
-        
-
     </style>
 </head>
+
 <body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen">
-    
+
     <!-- Navigation -->
     <nav class="bg-white/80 backdrop-blur-md shadow-lg fixed w-full top-0 z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-3">
                     <img src="logo.png" alt="Minesweeper Logo" class="w-12 h-12 object-contain">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    <span
+                        class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                         Minesweeper
                     </span>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="text-gray-700 hover:text-purple-600 transition-colors duration-300 font-medium">Domov</a>
-                    <a href="#about" class="text-gray-700 hover:text-purple-600 transition-colors duration-300 font-medium">O Hre</a>
-                    <a href="#features" class="text-gray-700 hover:text-purple-600 transition-colors duration-300 font-medium">Funkcie</a>
-                    <a href="#stats" class="text-gray-700 hover:text-purple-600 transition-colors duration-300 font-medium">Štatistiky</a>
+                    <a href="#home"
+                        class="text-gray-700 hover:text-purple-600 transition-colors duration-300 font-medium">Domov</a>
+                    <a href="#about"
+                        class="text-gray-700 hover:text-purple-600 transition-colors duration-300 font-medium">O Hre</a>
+                    <a href="#features"
+                        class="text-gray-700 hover:text-purple-600 transition-colors duration-300 font-medium">Funkcie</a>
+                    <a href="#stats"
+                        class="text-gray-700 hover:text-purple-600 transition-colors duration-300 font-medium">Štatistiky</a>
                 </div>
                 <button class="md:hidden text-gray-700">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
             </div>
@@ -111,17 +132,27 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center animate-fade-in-up">
                 <img src="logo.png" alt="Minesweeper Logo" class="w-40 h-40 mx-auto mb-8 animate-float object-contain">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent">
+                <h1
+                    class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent">
                     Minesweeper
                 </h1>
                 <p class="text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto">
                     Klasická logická hra, ktorá preverí tvoje schopnosti dedukcie a stratégie
                 </p>
-                <a href="game.html">
-                    <button class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-12 py-4 rounded-full text-xl font-bold shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300 animate-pulse-slow">
-                        Hrať Hru
-                    </button>
-                </a>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="game.html">
+                        <button
+                            class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-12 py-4 rounded-full text-xl font-bold shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300">
+                            👤 Singleplayer
+                        </button>
+                    </a>
+                    <a href="multiplayer.html">
+                        <button
+                            class="bg-gradient-to-r from-pink-600 to-red-600 text-white px-12 py-4 rounded-full text-xl font-bold shadow-2xl hover:shadow-pink-500/50 transform hover:scale-105 transition-all duration-300 animate-pulse-slow">
+                            👥 Multiplayer
+                        </button>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -130,46 +161,55 @@
     <section id="about" class="py-20 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 animate-fade-in-up">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h2
+                    class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     O Hre Minesweeper
                 </h2>
                 <p class="text-gray-600 text-lg max-w-2xl mx-auto">
                     Objavuj políčka, vyhýbaj sa mínám a staň sa majstrom logiky
                 </p>
             </div>
-            
+
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="bg-white/70 backdrop-blur-sm rounded-3xl p-8 shadow-xl animate-fade-in-up delay-100">
                     <h3 class="text-3xl font-bold mb-6 text-gray-800">Ako Hrať?</h3>
                     <div class="space-y-4">
                         <div class="flex items-start space-x-4">
-                            <div class="bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">1</div>
+                            <div
+                                class="bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                                1</div>
                             <p class="text-gray-700">Klikni na políčko, aby si ho odhalil</p>
                         </div>
                         <div class="flex items-start space-x-4">
-                            <div class="bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">2</div>
+                            <div
+                                class="bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                                2</div>
                             <p class="text-gray-700">Čísla ukazujú počet mín v okolí</p>
                         </div>
                         <div class="flex items-start space-x-4">
-                            <div class="bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">3</div>
+                            <div
+                                class="bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                                3</div>
                             <p class="text-gray-700">Označ míny pravým tlačidlom</p>
                         </div>
                         <div class="flex items-start space-x-4">
-                            <div class="bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">4</div>
+                            <div
+                                class="bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                                4</div>
                             <p class="text-gray-700">Odhal všetky bezpečné políčka pre výhru</p>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="bg-white/70 backdrop-blur-sm rounded-3xl p-8 shadow-xl animate-fade-in-up delay-200">
                     <h3 class="text-3xl font-bold mb-6 text-gray-800">História</h3>
                     <p class="text-gray-700 mb-4 leading-relaxed">
-                        Minesweeper je legendárna logická hra, ktorá sa stala ikonou počítačových hier. 
-                        Prvýkrát sa objavila v 1960-tych rokoch a neskôr získala masívnu popularitu 
+                        Minesweeper je legendárna logická hra, ktorá sa stala ikonou počítačových hier.
+                        Prvýkrát sa objavila v 1960-tych rokoch a neskôr získala masívnu popularitu
                         vďaka svojmu zahrnutiu v operačnom systéme Windows.
                     </p>
                     <p class="text-gray-700 leading-relaxed">
-                        Hra vyžaduje kombináciu logického myslenia, stratégie a niekedy aj trochu šťastia. 
+                        Hra vyžaduje kombináciu logického myslenia, stratégie a niekedy aj trochu šťastia.
                         Je to dokonalý spôsob, ako trénovať mozog a zlepšiť svoje analytické schopnosti.
                     </p>
                 </div>
@@ -181,19 +221,23 @@
     <section id="features" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-100/50 to-pink-100/50">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 animate-fade-in-up">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent">
+                <h2
+                    class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent">
                     Funkcie Hry
                 </h2>
                 <p class="text-gray-600 text-lg">
                     Všetko, čo potrebuješ pre perfektný herný zážitok
                 </p>
             </div>
-            
+
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-100">
-                    <div class="bg-gradient-to-br from-blue-500 to-cyan-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                <div
+                    class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-100">
+                    <div
+                        class="bg-gradient-to-br from-blue-500 to-cyan-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-800">Rýchla Hra</h3>
@@ -201,11 +245,15 @@
                         Okamžité načítanie a plynulý herný zážitok bez čakania
                     </p>
                 </div>
-                
-                <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-200">
-                    <div class="bg-gradient-to-br from-purple-500 to-pink-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+
+                <div
+                    class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-200">
+                    <div
+                        class="bg-gradient-to-br from-purple-500 to-pink-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4">
+                            </path>
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-800">Tri Úrovne</h3>
@@ -213,11 +261,14 @@
                         Začiatočník, Pokročilý a Expert - vyber si svoju výzvu
                     </p>
                 </div>
-                
-                <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-300">
-                    <div class="bg-gradient-to-br from-green-500 to-teal-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+
+                <div
+                    class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-300">
+                    <div
+                        class="bg-gradient-to-br from-green-500 to-teal-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-800">Časomiera</h3>
@@ -225,11 +276,15 @@
                         Sleduj svoj čas a porovnaj svoje najlepšie výsledky
                     </p>
                 </div>
-                
-                <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-100">
-                    <div class="bg-gradient-to-br from-yellow-500 to-orange-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+
+                <div
+                    class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-100">
+                    <div
+                        class="bg-gradient-to-br from-yellow-500 to-orange-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                            </path>
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-800">Štatistiky</h3>
@@ -237,11 +292,15 @@
                         Detailné štatistiky tvojich hier a pokrokov
                     </p>
                 </div>
-                
-                <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-200">
-                    <div class="bg-gradient-to-br from-red-500 to-pink-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+
+                <div
+                    class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-200">
+                    <div
+                        class="bg-gradient-to-br from-red-500 to-pink-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01">
+                            </path>
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-800">Vlastné Farby</h3>
@@ -249,11 +308,14 @@
                         Prispôsob si vzhľad hry podľa svojich preferencií
                     </p>
                 </div>
-                
-                <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-300">
-                    <div class="bg-gradient-to-br from-indigo-500 to-purple-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+
+                <div
+                    class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up delay-300">
+                    <div
+                        class="bg-gradient-to-br from-indigo-500 to-purple-500 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-800">Mobilná Podpora</h3>
@@ -269,31 +331,36 @@
     <section id="stats" class="py-20 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 animate-fade-in-up">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">
+                <h2
+                    class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">
                     Herné Štatistiky
                 </h2>
                 <p class="text-gray-600 text-lg">
                     Sleduj svoj progres a zlepšuj sa
                 </p>
             </div>
-            
+
             <div class="grid md:grid-cols-4 gap-8">
-                <div class="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-3xl p-8 text-white shadow-xl transform hover:scale-105 transition-all duration-300 animate-fade-in-up delay-100">
+                <div
+                    class="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-3xl p-8 text-white shadow-xl transform hover:scale-105 transition-all duration-300 animate-fade-in-up delay-100">
                     <div class="text-5xl font-bold mb-2">1,234</div>
                     <div class="text-blue-100 text-lg">Odohraných Hier</div>
                 </div>
-                
-                <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl p-8 text-white shadow-xl transform hover:scale-105 transition-all duration-300 animate-fade-in-up delay-200">
+
+                <div
+                    class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl p-8 text-white shadow-xl transform hover:scale-105 transition-all duration-300 animate-fade-in-up delay-200">
                     <div class="text-5xl font-bold mb-2">67%</div>
                     <div class="text-purple-100 text-lg">Úspešnosť</div>
                 </div>
-                
-                <div class="bg-gradient-to-br from-green-500 to-teal-500 rounded-3xl p-8 text-white shadow-xl transform hover:scale-105 transition-all duration-300 animate-fade-in-up delay-300">
+
+                <div
+                    class="bg-gradient-to-br from-green-500 to-teal-500 rounded-3xl p-8 text-white shadow-xl transform hover:scale-105 transition-all duration-300 animate-fade-in-up delay-300">
                     <div class="text-5xl font-bold mb-2">45s</div>
                     <div class="text-green-100 text-lg">Najrýchlejší Čas</div>
                 </div>
-                
-                <div class="bg-gradient-to-br from-yellow-500 to-orange-500 rounded-3xl p-8 text-white shadow-xl transform hover:scale-105 transition-all duration-300 animate-fade-in-up delay-400">
+
+                <div
+                    class="bg-gradient-to-br from-yellow-500 to-orange-500 rounded-3xl p-8 text-white shadow-xl transform hover:scale-105 transition-all duration-300 animate-fade-in-up delay-400">
                     <div class="text-5xl font-bold mb-2">156</div>
                     <div class="text-yellow-100 text-lg">Víťazné Série</div>
                 </div>
@@ -304,17 +371,27 @@
     <!-- CTA Section -->
     <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-pink-100/50 to-purple-100/50">
         <div class="max-w-4xl mx-auto text-center animate-fade-in-up">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <h2
+                class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 Pripravený na Výzvu?
             </h2>
             <p class="text-xl text-gray-700 mb-8">
                 Otestuj svoje logické schopnosti a staň sa majstrom Minesweepera
             </p>
-            <a href="game.html">
-                <button class="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-16 py-5 rounded-full text-2xl font-bold shadow-2xl hover:shadow-pink-500/50 transform hover:scale-105 transition-all duration-300 animate-pulse-slow">
-                    Hrať Hru
-                </button>
-            </a>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="game.html">
+                    <button
+                        class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-12 py-4 rounded-full text-xl font-bold shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300">
+                        👤 Singleplayer
+                    </button>
+                </a>
+                <a href="multiplayer.html">
+                    <button
+                        class="bg-gradient-to-r from-pink-600 to-red-600 text-white px-12 py-4 rounded-full text-xl font-bold shadow-2xl hover:shadow-pink-500/50 transform hover:scale-105 transition-all duration-300 animate-pulse-slow">
+                        👥 Multiplayer
+                    </button>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -334,28 +411,39 @@
                 <div>
                     <h4 class="text-xl font-bold mb-4">Rýchle Odkazy</h4>
                     <ul class="space-y-2">
-                        <li><a href="#home" class="text-gray-400 hover:text-white transition-colors duration-300">Domov</a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors duration-300">O Hre</a></li>
-                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors duration-300">Funkcie</a></li>
-                        <li><a href="#stats" class="text-gray-400 hover:text-white transition-colors duration-300">Štatistiky</a></li>
+                        <li><a href="#home"
+                                class="text-gray-400 hover:text-white transition-colors duration-300">Domov</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors duration-300">O
+                                Hre</a></li>
+                        <li><a href="#features"
+                                class="text-gray-400 hover:text-white transition-colors duration-300">Funkcie</a></li>
+                        <li><a href="#stats"
+                                class="text-gray-400 hover:text-white transition-colors duration-300">Štatistiky</a>
+                        </li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-xl font-bold mb-4">Sleduj Nás</h4>
                     <div class="flex space-x-4">
-                        <a href="#" class="bg-gray-800 hover:bg-purple-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300">
+                        <a href="#"
+                            class="bg-gray-800 hover:bg-purple-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                             </svg>
                         </a>
-                        <a href="#" class="bg-gray-800 hover:bg-purple-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300">
+                        <a href="#"
+                            class="bg-gray-800 hover:bg-purple-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                <path
+                                    d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                             </svg>
                         </a>
-                        <a href="#" class="bg-gray-800 hover:bg-purple-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300">
+                        <a href="#"
+                            class="bg-gray-800 hover:bg-purple-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                                <path
+                                    d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
                             </svg>
                         </a>
                     </div>
@@ -406,7 +494,7 @@
         // Play button click effect
         document.querySelectorAll('button').forEach(button => {
             if (button.textContent.includes('Hrať Hru')) {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     this.style.transform = 'scale(0.95)';
                     setTimeout(() => {
                         this.style.transform = 'scale(1.05)';
@@ -420,4 +508,5 @@
     </script>
 
 </body>
+
 </html>
